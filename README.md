@@ -5,7 +5,7 @@ Telegram Messenger for iOS
 
 ```
 $git clone https://github.com/NedColin/Telegram.git
-$git submodule update --init --recursive
+$git submodule update --init
 ```
 or [clone with submodules](https://stackoverflow.com/questions/3796927/how-to-git-clone-including-submodules)
 
