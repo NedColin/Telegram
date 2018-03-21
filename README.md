@@ -28,15 +28,29 @@ git clone --recurse-submodules -j8 https://github.com/NedColin/Telegram.git
   * 传输组件:定义客户端和服务器的方法，使得协议能够在其他现有的网络协议(如HTTP、HTTPS、TCP、UDP)上传输消息。
 
  而MTProtokit是对MTProto协议在实现了OS x和iOS系统的一个实现和封装。
+ 
+ 
+#### 服务端-客户端加密
+服务端与客户端加密协议：
+   
+![avatar](./screenShots/client-server-auth.png)
+  
+#### 点对点加密
+点对点加密协议：
 
-#### Telegram消息类型
-  * [服务消息](https://core.telegram.org/mtproto/service_messages)。
-    
-		这里req_msg_id是另一方发送的消息的标识符，包含一个RPC查询。通过这种方式，接收方知道结果是对特定RPC查询的响应。
-与此同时，此响应作为对另一方接收req_msg_id消息的确认。
+![avatar](./screenShots/endToEndEncrypted.png)
 
-注意，对RPC查询的响应也必须得到确认。最常见的情况是，这与下一条消息的传输相一致(该消息可能有一个附加到该消息的容器，它携带一个服务消息和确认)。
-  * 加密(授权)层:定义在传输协议传输之前加密消息的方法。
+#### Telegram内置消息
+服务端返回的消息称为内置消息，内置消息是实现MTProto的基础，主要的内置消息有：
+
+  * [RPC响应消息](https://core.telegram.org/mtproto/service_messages)。
+
+这里req_msg_id是另一方发送的消息的标识符，包含一个RPC查询。通过这种方式，接收方知道结果是对特定RPC查询的响应。
+与此同时，此响应作为对另一方接收req_msg_id消息的确认。注意，对RPC查询的响应也必须得到确认。最常见的情况是，这与下一条消息的传输相一致(该消息可能有一个附加到该消息的容器，它携带一个服务消息和确认)。
+  
+  * RPC 错误
+  * 取消RPC查询
+
 
 ### MTProto rpc服务初始化
 所有的rpc服务的初始化通过类TGTLSerialization注册进行管理，TGTLSerialization的职能是序列化和反序列化rpc的二进制数据的报文，应用程序启动时，调用TLRegisterClasses注册所有的[rpc方法名](https://core.telegram.org/methods)，并且可以通过方法签名或者方法名字符串获取对应的rpc构造实例。
@@ -451,6 +465,5 @@ TLRPCmessages_sendMessage_manual
 
   
   
-
 
 
